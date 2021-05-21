@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="d1161b89-7b2d-4fb0-8e8a-545c362c5540" activeEnvironment="Default" name="Webinar 5 SoapServerDemo" soapui-version="5.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="c82b1dd3-fef8-4370-87e3-65de7615db58" wsaVersion="NONE" name="snapshotPullSoapBinding" type="wsdl" bindingName="{http://datex2.eu/wsdl/snapshotPull/2020}snapshotPullSoapBinding" soapVersion="1_1" anonymous="optional" definition="https://localhost:44375/SituationService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://localhost:44375/SituationService"><con:part><con:url>https://localhost:44375/SituationService</con:url><con:content><![CDATA[<definitions targetNamespace="http://datex2.eu/wsdl/snapshotPull/2020" name="snapshotPull" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://datex2.eu/wsdl/snapshotPull/2020" xmlns:con="http://datex2.eu/schema/3/messageContainer" xmlns:ex="http://datex2.eu/schema/3/exchangeInformation" xmlns:com="http://datex2.eu/schema/3/common">
+  <documentation>Exchange 2020 Version ( DATEX II 3.x related )
+		This document describes the Exchange 2020 (supporting DATEX II) Snapshot Pull service interface
+		This wsdl document is the reference with which each DATEX II Web Service has to be built
+		Refer http://datex2.eu</documentation>
+  <types>
+    <xs:schema targetNamespace="http://datex2.eu/wsdl/snapshotPull/2020">
+      <xs:import namespace="http://datex2.eu/schema/3/messageContainer" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_MessageContainer.xsd"/>
+      <xs:import namespace="http://datex2.eu/schema/3/exchangeInformation" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_ExchangeInformation.xsd"/>
+      <!--Here, the "namespace" MUST be the same as the used DATEXII schema targetNamespace-->
+      <!--Here, the "schemaLocation" depends on each implementation and MUST be filled  by each developer, for instance  "file:///C:/DATEXII/MessageContainer.xsd"-->
+      <!--for snapshot pull no elelement definition for input message is needed
+		<xs:element name="pullSnapshotDataInput" type="ex:ExchangeInformation" />-->
+      <xs:element name="pullSnapshotDataOutput" type="con:MessageContainer"/>
+    </xs:schema>
+  </types>
+  <message name="pullSnapshotDataInputMessage"/>
+  <message name="pullSnapshotDataOutputMessage">
+    <part name="return" element="tns:pullSnapshotDataOutput"/>
+  </message>
+  <portType name="snapshotPullInterface">
+    <operation name="pullSnapshotData">
+      <input message="tns:pullSnapshotDataInputMessage"/>
+      <!--The SnapshotPull service doesn't use any input message but its declaration is here mandatory for a few Web Service frameworks-->
+      <output message="tns:pullSnapshotDataOutputMessage"/>
+    </operation>
+  </portType>
+  <binding name="snapshotPullSoapBinding" type="tns:snapshotPullInterface">
+    <soapbind:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="pullSnapshotData">
+      <soapbind:operation soapAction="http://datex2.eu/wsdl/snapshotPull/2020/pullData" style="document"/>
+      <input>
+        <soapbind:body use="literal"/>
+      </input>
+      <output>
+        <soapbind:body parts="return" use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="snapshotPull">
+    <port name="snapshotPullSoapEndPoint" binding="tns:snapshotPullSoapBinding">
+      <soapbind:address location="https://localhost:44375/SituationService"/>
+      <!--Here, the "location" depends on each implementation and MUST be filled  by each developer, for instance "http://localhost:8080/snapshotPullService/2020"-->
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_MessageContainer.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" targetNamespace="http://datex2.eu/schema/3/messageContainer" xmlns:con="http://datex2.eu/schema/3/messageContainer" xmlns:ex="http://datex2.eu/schema/3/exchangeInformation" xmlns:com="http://datex2.eu/schema/3/common" xmlns:d2="http://datex2.eu/schema/3/d2Payload" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/d2Payload" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_D2Payload.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/exchangeInformation" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_ExchangeInformation.xsd"/>
+  <xs:element name="exchangeInformation" type="ex:ExchangeInformation"/>
+  <xs:element name="messageContainer" type="con:MessageContainer"/>
+  <xs:complexType name="MessageContainer">
+    <xs:sequence>
+      <xs:element name="payload" type="com:PayloadPublication" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="exchangeInformation" type="ex:ExchangeInformation"/>
+      <xs:element name="_messageContainerExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="modelBaseVersion" type="xs:string" use="required" fixed="3"/>
+    <xs:attribute name="extensionName" type="xs:string" use="optional" default="Exchange 2018"/>
+    <xs:attribute name="extensionVersion" type="xs:string" use="optional" default="1"/>
+    <xs:attribute name="profileName" type="xs:string" use="optional"/>
+    <xs:attribute name="profileVersion" type="xs:string" use="optional"/>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_D2Payload.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1" targetNamespace="http://datex2.eu/schema/3/d2Payload" xmlns:d2="http://datex2.eu/schema/3/d2Payload" xmlns:com="http://datex2.eu/schema/3/common" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:roa="http://datex2.eu/schema/3/roadTrafficData" xmlns:sit="http://datex2.eu/schema/3/situation" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/situation" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Situation.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/roadTrafficData" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_RoadTrafficData.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/locationReferencing" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_LocationReferencing.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd"/>
+  <xs:element name="payload" type="com:PayloadPublication">
+    <xs:unique name="_payloadSituationRecordConstraint">
+      <xs:selector xpath=".//sit:situationRecord"/>
+      <xs:field xpath="@id"/>
+      <xs:field xpath="@version"/>
+    </xs:unique>
+    <xs:unique name="_payloadSituationConstraint">
+      <xs:selector xpath=".//sit:situation"/>
+      <xs:field xpath="@id"/>
+    </xs:unique>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Situation.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1" targetNamespace="http://datex2.eu/schema/3/situation" xmlns:sit="http://datex2.eu/schema/3/situation" xmlns:com="http://datex2.eu/schema/3/common" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/locationReferencing" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_LocationReferencing.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd"/>
+  <xs:complexType name="_AccidentTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:AccidentTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_AnimalPresenceTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:AnimalPresenceTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_CommentTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:CommentTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ComplianceOptionEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:ComplianceOptionEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_DrivingConditionTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:DrivingConditionTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_EnvironmentalObstructionTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:EnvironmentalObstructionTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_NonWeatherRelatedRoadConditionTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:NonWeatherRelatedRoadConditionTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ObstructionTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:ObstructionTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_PoorEnvironmentTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:PoorEnvironmentTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ProbabilityOfOccurrenceEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:ProbabilityOfOccurrenceEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_RoadMaintenanceTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:RoadMaintenanceTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_RoadOrCarriagewayOrLaneManagementTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:RoadOrCarriagewayOrLaneManagementTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_SeverityEnum">
+    <xs:simpleContent>
+      <xs:extension base="sit:SeverityEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_SituationRecordVersionedReference">
+    <xs:complexContent>
+      <xs:extension base="com:VersionedReference">
+        <xs:attribute name="targetClass" type="xs:string" use="required" fixed="sit:SituationRecord"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Accident">
+    <xs:complexContent>
+      <xs:extension base="sit:TrafficElement">
+        <xs:sequence>
+          <xs:element name="accidentType" type="sit:_AccidentTypeEnum" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="_accidentExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="AccidentTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="accident"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AnimalPresenceObstruction">
+    <xs:complexContent>
+      <xs:extension base="sit:Obstruction">
+        <xs:sequence>
+          <xs:element name="animalPresenceType" type="sit:_AnimalPresenceTypeEnum" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="_animalPresenceObstructionExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="AnimalPresenceTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="animalsOnTheRoad"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Cause">
+    <xs:sequence>
+      <xs:element name="managedCause" type="sit:SituationRecordReference" minOccurs="0"/>
+      <xs:element name="_causeExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Comment">
+    <xs:sequence>
+      <xs:element name="comment" type="com:MultilingualString" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="commentDateTime" type="com:DateTime" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="commentType" type="sit:_CommentTypeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_commentExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CommentTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="abnormalLoadMovementNote"/>
+      <xs:enumeration value="dataProcessingNote"/>
+      <xs:enumeration value="description"/>
+      <xs:enumeration value="internalNote"/>
+      <xs:enumeration value="roadworksName"/>
+      <xs:enumeration value="warning"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ComplianceOptionEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="advisory"/>
+      <xs:enumeration value="mandatory"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Conditions">
+    <xs:complexContent>
+      <xs:extension base="sit:TrafficElement">
+        <xs:sequence>
+          <xs:element name="drivingConditionType" type="sit:_DrivingConditionTypeEnum" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="_conditionsExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DrivingConditionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="impossible"/>
+      <xs:enumeration value="hazardous"/>
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="passableWithCare"/>
+      <xs:enumeration value="unknown"/>
+      <xs:enumeration value="veryHazardous"/>
+      <xs:enumeration value="winterConditions"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="EnvironmentalObstruction">
+    <xs:complexContent>
+      <xs:extension base="sit:Obstruction">
+        <xs:sequence>
+          <xs:element name="environmentalObstructionType" type="sit:_EnvironmentalObstructionTypeEnum" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="_environmentalObstructionExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="EnvironmentalObstructionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="avalanches"/>
+      <xs:enumeration value="flooding"/>
+      <xs:enumeration value="rockfalls"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="GeneralObstruction">
+    <xs:complexContent>
+      <xs:extension base="sit:Obstruction">
+        <xs:sequence>
+          <xs:element name="obstructionType" type="sit:_ObstructionTypeEnum" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="_generalObstructionExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MaintenanceWorks">
+    <xs:complexContent>
+      <xs:extension base="sit:Roadworks">
+        <xs:sequence>
+          <xs:element name="roadMaintenanceType" type="sit:_RoadMaintenanceTypeEnum" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="_maintenanceWorksExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NetworkManagement" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="sit:OperatorAction">
+        <xs:sequence>
+          <xs:element name="complianceOption" type="sit:_ComplianceOptionEnum" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="forVehiclesWithCharacteristicsOf" type="com:VehicleCharacteristics" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="_networkManagementExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NonWeatherRelatedRoadConditions">
+    <xs:complexContent>
+      <xs:extension base="sit:RoadSurfaceConditions">
+        <xs:sequence>
+          <xs:element name="nonWeatherRelatedRoadConditionType" type="sit:_NonWeatherRelatedRoadConditionTypeEnum" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="_nonWeatherRelatedRoadConditionsExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="NonWeatherRelatedRoadConditionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="looseChippings"/>
+      <xs:enumeration value="roadSurfaceInPoorCondition"/>
+      <xs:enumeration value="slipperyRoad"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Obstruction" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="sit:TrafficElement">
+        <xs:sequence>
+          <xs:element name="_obstructionExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ObstructionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="obstructionOnTheRoad"/>
+      <xs:enumeration value="severeFrostDamagedRoadway"/>
+      <xs:enumeration value="unprotectedAccidentArea"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="OperatorAction" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="sit:SituationRecord">
+        <xs:sequence>
+          <xs:element name="_operatorActionExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PoorEnvironmentConditions">
+    <xs:complexContent>
+      <xs:extension base="sit:Conditions">
+        <xs:sequence>
+          <xs:element name="poorEnvironmentType" type="sit:_PoorEnvironmentTypeEnum" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="_poorEnvironmentConditionsExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="PoorEnvironmentTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="badWeather"/>
+      <xs:enumeration value="blizzard"/>
+      <xs:enumeration value="blowingDust"/>
+      <xs:enumeration value="blowingSnow"/>
+      <xs:enumeration value="fog"/>
+      <xs:enumeration value="snowfall"/>
+      <xs:enumeration value="stormForceWinds"/>
+      <xs:enumeration value="strongWinds"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProbabilityOfOccurrenceEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="certain"/>
+      <xs:enumeration value="probable"/>
+      <xs:enumeration value="riskOf"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RoadMaintenanceTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="roadworks"/>
+      <xs:enumeration value="snowploughsInUse"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RoadOrCarriagewayOrLaneManagement">
+    <xs:complexContent>
+      <xs:extension base="sit:NetworkManagement">
+        <xs:sequence>
+          <xs:element name="roadOrCarriagewayOrLaneManagementType" type="sit:_RoadOrCarriagewayOrLaneManagementTypeEnum" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="_roadOrCarriagewayOrLaneManagementExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="RoadOrCarriagewayOrLaneManagementTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="closedPermanentlyForTheWinter"/>
+      <xs:enumeration value="roadClosed"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RoadSurfaceConditions" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="sit:Conditions">
+        <xs:sequence>
+          <xs:element name="_roadSurfaceConditionsExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Roadworks" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="sit:OperatorAction">
+        <xs:sequence>
+          <xs:element name="_roadworksExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="SeverityEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="highest"/>
+      <xs:enumeration value="high"/>
+      <xs:enumeration value="medium"/>
+      <xs:enumeration value="low"/>
+      <xs:enumeration value="lowest"/>
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="unknown"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Situation">
+    <xs:sequence>
+      <xs:element name="headerInformation" type="com:HeaderInformation"/>
+      <xs:element name="situationRecord" type="sit:SituationRecord" maxOccurs="unbounded"/>
+      <xs:element name="_situationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="SituationPublication">
+    <xs:complexContent>
+      <xs:extension base="com:PayloadPublication">
+        <xs:sequence>
+          <xs:element name="situation" type="sit:Situation" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="_situationPublicationExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SituationRecord" abstract="true">
+    <xs:sequence>
+      <xs:element name="situationRecordCreationTime" type="com:DateTime" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="situationRecordVersionTime" type="com:DateTime" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="probabilityOfOccurrence" type="sit:_ProbabilityOfOccurrenceEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="severity" type="sit:_SeverityEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="safetyRelatedMessage" type="com:Boolean" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="validity" type="com:Validity"/>
+      <xs:element name="cause" type="sit:Cause" minOccurs="0"/>
+      <xs:element name="generalPublicComment" type="sit:Comment" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="locationReference" type="loc:LocationReference"/>
+      <xs:element name="_situationRecordExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="SituationRecordReference">
+    <xs:complexContent>
+      <xs:extension base="com:GlobalReference">
+        <xs:sequence>
+          <xs:element name="objectReference" type="sit:_SituationRecordVersionedReference" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="_situationRecordReferenceExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TrafficElement" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="sit:SituationRecord">
+        <xs:sequence>
+          <xs:element name="_trafficElementExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="WeatherRelatedRoadConditions">
+    <xs:complexContent>
+      <xs:extension base="sit:RoadSurfaceConditions">
+        <xs:sequence>
+          <xs:element name="weatherRelatedRoadConditionType" type="com:_WeatherRelatedRoadConditionTypeEnum" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element name="_weatherRelatedRoadConditionsExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_LocationReferencing.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1" targetNamespace="http://datex2.eu/schema/3/locationReferencing" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:com="http://datex2.eu/schema/3/common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd"/>
+  <xs:complexType name="_AltitudeAccuracyEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:AltitudeAccuracyEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_HeightTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:HeightTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_OpenlrFormOfWayEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:OpenlrFormOfWayEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_OpenlrFunctionalRoadClassEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:OpenlrFunctionalRoadClassEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_OpenlrOrientationEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:OpenlrOrientationEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_OpenlrSideOfRoadEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:OpenlrSideOfRoadEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_PositionConfidenceCodedErrorEnum">
+    <xs:simpleContent>
+      <xs:extension base="loc:PositionConfidenceCodedErrorEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_PredefinedLocationVersionedReference">
+    <xs:complexContent>
+      <xs:extension base="com:VersionedReference">
+        <xs:attribute name="targetClass" type="xs:string" use="required" fixed="loc:PredefinedLocation"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="AltitudeAccuracyEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="equalToOrLessThan1Centimetre"/>
+      <xs:enumeration value="equalToOrLessThan2Centimetres"/>
+      <xs:enumeration value="equalToOrLessThan5Centimetres"/>
+      <xs:enumeration value="equalToOrLessThan10Centimetres"/>
+      <xs:enumeration value="equalToOrLessThan20Centimetres"/>
+      <xs:enumeration value="equalToOrLessThan50Centimetres"/>
+      <xs:enumeration value="equalToOrLessThan1Metre"/>
+      <xs:enumeration value="equalToOrLessThan2Metres"/>
+      <xs:enumeration value="equalToOrLessThan5Metres"/>
+      <xs:enumeration value="equalToOrLessThan10Metres"/>
+      <xs:enumeration value="equalToOrLessThan20Metres"/>
+      <xs:enumeration value="equalToOrLessThan50Metres"/>
+      <xs:enumeration value="equalToOrLessThan100Metres"/>
+      <xs:enumeration value="equalToOrLessThan200Metres"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AltitudeConfidence">
+    <xs:sequence>
+      <xs:element name="altitudeAccuracyCodedValue" type="loc:_AltitudeAccuracyEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="altitudeAccuracyCodedError" type="loc:_PositionConfidenceCodedErrorEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_altitudeConfidenceExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeightCoordinate">
+    <xs:sequence>
+      <xs:element name="heightValue" type="com:MetresAsFloat" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="heightType" type="loc:_HeightTypeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="altitudeConfidence" type="loc:AltitudeConfidence" minOccurs="0"/>
+      <xs:element name="verticalPositionAccuracy" type="loc:PositionAccuracy" minOccurs="0"/>
+      <xs:element name="_heightCoordinateExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="HeightTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ellipsoidalHeight"/>
+      <xs:enumeration value="gravityRelatedHeight"/>
+      <xs:enumeration value="relativeHeight"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Location" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="loc:LocationReference">
+        <xs:sequence>
+          <xs:element name="coordinatesForDisplay" type="loc:PointCoordinates" minOccurs="0"/>
+          <xs:element name="_locationExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LocationByReference">
+    <xs:complexContent>
+      <xs:extension base="loc:Location">
+        <xs:sequence>
+          <xs:element name="predefinedLocationReference" type="loc:_PredefinedLocationVersionedReference" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="_locationByReferenceExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="LocationReference" abstract="true">
+    <xs:sequence>
+      <xs:element name="_locationReferenceExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NetworkLocation" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="loc:Location">
+        <xs:sequence>
+          <xs:element name="supplementaryPositionalDescription" type="loc:SupplementaryPositionalDescription" minOccurs="0"/>
+          <xs:element name="_networkLocationExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OpenlrBasePointLocation" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="loc:OpenlrPointLocationReference">
+        <xs:sequence>
+          <xs:element name="openlrSideOfRoad" type="loc:_OpenlrSideOfRoadEnum" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="openlrOrientation" type="loc:_OpenlrOrientationEnum" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="openlrLocationReferencePoint" type="loc:OpenlrLocationReferencePoint"/>
+          <xs:element name="openlrLastLocationReferencePoint" type="loc:OpenlrLastLocationReferencePoint"/>
+          <xs:element name="openlrOffsets" type="loc:OpenlrOffsets" minOccurs="0"/>
+          <xs:element name="_openlrBasePointLocationExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OpenlrBaseReferencePoint" abstract="true">
+    <xs:sequence>
+      <xs:element name="openlrCoordinates" type="loc:PointCoordinates"/>
+      <xs:element name="openlrLineAttributes" type="loc:OpenlrLineAttributes"/>
+      <xs:element name="_openlrBaseReferencePointExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="OpenlrFormOfWayEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="undefined"/>
+      <xs:enumeration value="motorway"/>
+      <xs:enumeration value="multipleCarriageway"/>
+      <xs:enumeration value="singleCarriageway"/>
+      <xs:enumeration value="roundabout"/>
+      <xs:enumeration value="slipRoad"/>
+      <xs:enumeration value="trafficSquare"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OpenlrFunctionalRoadClassEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="frc0"/>
+      <xs:enumeration value="frc1"/>
+      <xs:enumeration value="frc2"/>
+      <xs:enumeration value="frc3"/>
+      <xs:enumeration value="frc4"/>
+      <xs:enumeration value="frc5"/>
+      <xs:enumeration value="frc6"/>
+      <xs:enumeration value="frc7"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="OpenlrGeoCoordinate">
+    <xs:complexContent>
+      <xs:extension base="loc:OpenlrPointLocationReference">
+        <xs:sequence>
+          <xs:element name="openlrCoordinates" type="loc:PointCoordinates"/>
+          <xs:element name="_openlrGeoCoordinateExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OpenlrLastLocationReferencePoint">
+    <xs:complexContent>
+      <xs:extension base="loc:OpenlrBaseReferencePoint">
+        <xs:sequence>
+          <xs:element name="_openlrLastLocationReferencePointExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OpenlrLineAttributes">
+    <xs:sequence>
+      <xs:element name="openlrFunctionalRoadClass" type="loc:_OpenlrFunctionalRoadClassEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="openlrFormOfWay" type="loc:_OpenlrFormOfWayEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="openlrBearing" type="com:AngleInDegrees" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="_openlrLineAttributesExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OpenlrLocationReferencePoint">
+    <xs:complexContent>
+      <xs:extension base="loc:OpenlrBaseReferencePoint">
+        <xs:sequence>
+          <xs:element name="openlrPathAttributes" type="loc:OpenlrPathAttributes"/>
+          <xs:element name="_openlrLocationReferencePointExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OpenlrOffsets">
+    <xs:sequence>
+      <xs:element name="openlrPositiveOffset" type="com:MetresAsNonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="openlrNegativeOffset" type="com:MetresAsNonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_openlrOffsetsExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="OpenlrOrientationEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="noOrientationOrUnknown"/>
+      <xs:enumeration value="withLineDirection"/>
+      <xs:enumeration value="againstLineDirection"/>
+      <xs:enumeration value="both"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="OpenlrPathAttributes">
+    <xs:sequence>
+      <xs:element name="openlrLowestFrcToNextLRPoint" type="loc:_OpenlrFunctionalRoadClassEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="openlrDistanceToNextLRPoint" type="com:NonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="_openlrPathAttributesExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OpenlrPointAlongLine">
+    <xs:complexContent>
+      <xs:extension base="loc:OpenlrBasePointLocation">
+        <xs:sequence>
+          <xs:element name="_openlrPointAlongLineExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="OpenlrPointLocationReference" abstract="true">
+    <xs:sequence>
+      <xs:element name="_openlrPointLocationReferenceExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="OpenlrSideOfRoadEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="onRoadOrUnknown"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="both"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="PointByCoordinates">
+    <xs:sequence>
+      <xs:element name="bearing" type="com:AngleInDegrees" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="pointCoordinates" type="loc:PointCoordinates"/>
+      <xs:element name="_pointByCoordinatesExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PointCoordinates">
+    <xs:sequence>
+      <xs:element name="latitude" type="com:Float" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="longitude" type="com:Float" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="heightCoordinate" type="loc:HeightCoordinate" minOccurs="0" maxOccurs="3"/>
+      <xs:element name="positionConfidenceEllipse" type="loc:PositionConfidenceEllipse" minOccurs="0"/>
+      <xs:element name="horizontalPositionAccuracy" type="loc:PositionAccuracy" minOccurs="0"/>
+      <xs:element name="_pointCoordinatesExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PointLocation">
+    <xs:complexContent>
+      <xs:extension base="loc:NetworkLocation">
+        <xs:sequence>
+          <xs:element name="pointByCoordinates" type="loc:PointByCoordinates" minOccurs="0"/>
+          <xs:element name="openlrPointLocationReference" type="loc:OpenlrPointLocationReference" minOccurs="0"/>
+          <xs:element name="_pointLocationExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PositionAccuracy">
+    <xs:sequence>
+      <xs:element name="accuracyPercentile50" type="com:MetresAsFloat" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="accuracyPercentile75" type="com:MetresAsFloat" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="accuracyPercentile95" type="com:MetresAsFloat" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_positionAccuracyExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="PositionConfidenceCodedErrorEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="outOfRange"/>
+      <xs:enumeration value="unavailable"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="PositionConfidenceEllipse">
+    <xs:sequence>
+      <xs:element name="semiMajorAxisLength" type="com:MetresAsFloat" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semiMajorAxisLengthCodedError" type="loc:_PositionConfidenceCodedErrorEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semiMinorAxisLength" type="com:MetresAsFloat" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semiMinorAxisLengthCodedError" type="loc:_PositionConfidenceCodedErrorEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semiMajorAxisOrientation" type="com:AngleInDegrees" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="semiMajorAxisOrientationError" type="com:Boolean" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_positionConfidenceEllipseExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RoadInformation">
+    <xs:sequence>
+      <xs:element name="roadName" type="com:String" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="roadNumber" type="com:String" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_roadInformationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SupplementaryPositionalDescription">
+    <xs:sequence>
+      <xs:element name="locationDescription" type="com:MultilingualString" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="roadInformation" type="loc:RoadInformation" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="_supplementaryPositionalDescriptionExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1" targetNamespace="http://datex2.eu/schema/3/common" xmlns:com="http://datex2.eu/schema/3/common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="_ComparisonOperatorEnum">
+    <xs:simpleContent>
+      <xs:extension base="com:ComparisonOperatorEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ComputationMethodEnum">
+    <xs:simpleContent>
+      <xs:extension base="com:ComputationMethodEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ExtensionType">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="_InformationStatusEnum">
+    <xs:simpleContent>
+      <xs:extension base="com:InformationStatusEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ValidityStatusEnum">
+    <xs:simpleContent>
+      <xs:extension base="com:ValidityStatusEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_WeatherRelatedRoadConditionTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="com:WeatherRelatedRoadConditionTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_WeightTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="com:WeightTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="AngleInDegrees">
+    <xs:restriction base="com:NonNegativeInteger">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="359"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Boolean">
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="ComparisonOperatorEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="equalTo"/>
+      <xs:enumeration value="greaterThan"/>
+      <xs:enumeration value="greaterThanOrEqualTo"/>
+      <xs:enumeration value="lessThan"/>
+      <xs:enumeration value="lessThanOrEqualTo"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ComputationMethodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="arithmeticAverageOfSamplesBasedOnAFixedNumberOfSamples"/>
+      <xs:enumeration value="arithmeticAverageOfSamplesInATimePeriod"/>
+      <xs:enumeration value="harmonicAverageOfSamplesInATimePeriod"/>
+      <xs:enumeration value="medianOfSamplesInATimePeriod"/>
+      <xs:enumeration value="movingAverageOfSamples"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CountryCode">
+    <xs:restriction base="com:String">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DataValue" abstract="true">
+    <xs:sequence>
+      <xs:element name="dataError" type="com:Boolean" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="reasonForDataError" type="com:MultilingualString" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_dataValueExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="accuracy" type="com:Percentage" use="optional"/>
+    <xs:attribute name="computationalMethod" type="com:ComputationMethodEnum" use="optional"/>
+    <xs:attribute name="numberOfIncompleteInputs" type="com:NonNegativeInteger" use="optional"/>
+    <xs:attribute name="numberOfInputValuesUsed" type="com:NonNegativeInteger" use="optional"/>
+    <xs:attribute name="smoothingFactor" type="com:Float" use="optional"/>
+    <xs:attribute name="standardDeviation" type="com:Float" use="optional"/>
+    <xs:attribute name="supplierCalculatedDataQuality" type="com:Percentage" use="optional"/>
+  </xs:complexType>
+  <xs:simpleType name="DateTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="Float">
+    <xs:restriction base="xs:float"/>
+  </xs:simpleType>
+  <xs:complexType name="GlobalReference" abstract="true">
+    <xs:sequence>
+      <xs:element name="_globalReferenceExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GrossWeightCharacteristic">
+    <xs:sequence>
+      <xs:element name="comparisonOperator" type="com:_ComparisonOperatorEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="grossVehicleWeight" type="com:Tonnes" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="typeOfWeight" type="com:_WeightTypeEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="_grossWeightCharacteristicExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HeaderInformation">
+    <xs:sequence>
+      <xs:element name="informationStatus" type="com:_InformationStatusEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="_headerInformationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="InformationStatusEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="real"/>
+      <xs:enumeration value="securityExercise"/>
+      <xs:enumeration value="technicalExercise"/>
+      <xs:enumeration value="test"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="InternationalIdentifier">
+    <xs:sequence>
+      <xs:element name="country" type="com:CountryCode" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="nationalIdentifier" type="com:String" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="_internationalIdentifierExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Language">
+    <xs:restriction base="xs:language"/>
+  </xs:simpleType>
+  <xs:simpleType name="MetresAsFloat">
+    <xs:restriction base="com:Float"/>
+  </xs:simpleType>
+  <xs:simpleType name="MetresAsNonNegativeInteger">
+    <xs:restriction base="com:NonNegativeInteger"/>
+  </xs:simpleType>
+  <xs:complexType name="MultilingualString">
+    <xs:sequence>
+      <xs:element name="values">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="value" type="com:MultilingualStringValue" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MultilingualStringValue">
+    <xs:simpleContent>
+      <xs:extension base="com:MultilingualStringValueType">
+        <xs:attribute name="lang" type="xs:language"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="MultilingualStringValueType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NonNegativeInteger">
+    <xs:restriction base="xs:nonNegativeInteger"/>
+  </xs:simpleType>
+  <xs:complexType name="OverallPeriod">
+    <xs:sequence>
+      <xs:element name="overallStartTime" type="com:DateTime" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="overallEndTime" type="com:DateTime" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_overallPeriodExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PayloadPublication" abstract="true">
+    <xs:sequence>
+      <xs:element name="feedType" type="com:String" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="publicationTime" type="com:DateTime" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="publicationCreator" type="com:InternationalIdentifier"/>
+      <xs:element name="_payloadPublicationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="lang" type="com:Language" use="required"/>
+    <xs:attribute name="modelBaseVersion" type="xs:string" use="required" fixed="3"/>
+    <xs:attribute name="extensionName" type="xs:string" use="optional"/>
+    <xs:attribute name="extensionVersion" type="xs:string" use="optional"/>
+    <xs:attribute name="profileName" type="xs:string" use="optional"/>
+    <xs:attribute name="profileVersion" type="xs:string" use="optional"/>
+  </xs:complexType>
+  <xs:simpleType name="Percentage">
+    <xs:restriction base="com:Float"/>
+  </xs:simpleType>
+  <xs:complexType name="Reference">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:simpleType name="String">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Tonnes">
+    <xs:restriction base="com:Float"/>
+  </xs:simpleType>
+  <xs:complexType name="Validity">
+    <xs:sequence>
+      <xs:element name="validityStatus" type="com:_ValidityStatusEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="validityTimeSpecification" type="com:OverallPeriod"/>
+      <xs:element name="_validityExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ValidityStatusEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="active"/>
+      <xs:enumeration value="planned"/>
+      <xs:enumeration value="suspended"/>
+      <xs:enumeration value="definedByValidityTimeSpec"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="VehicleCharacteristics">
+    <xs:sequence>
+      <xs:element name="grossWeightCharacteristic" type="com:GrossWeightCharacteristic" minOccurs="0" maxOccurs="2"/>
+      <xs:element name="_vehicleCharacteristicsExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="VersionedReference">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="version" type="xs:string" use="optional"/>
+  </xs:complexType>
+  <xs:simpleType name="WeatherRelatedRoadConditionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="blackIce"/>
+      <xs:enumeration value="ice"/>
+      <xs:enumeration value="icyPatches"/>
+      <xs:enumeration value="looseSnow"/>
+      <xs:enumeration value="slippery"/>
+      <xs:enumeration value="slushOnRoad"/>
+      <xs:enumeration value="snow"/>
+      <xs:enumeration value="other"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="WeightTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="actual"/>
+      <xs:enumeration value="maximumPermitted"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_RoadTrafficData.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1" targetNamespace="http://datex2.eu/schema/3/roadTrafficData" xmlns:roa="http://datex2.eu/schema/3/roadTrafficData" xmlns:com="http://datex2.eu/schema/3/common" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/locationReferencing" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_LocationReferencing.xsd"/>
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd"/>
+  <xs:complexType name="DateTimeValue">
+    <xs:complexContent>
+      <xs:extension base="com:DataValue">
+        <xs:sequence>
+          <xs:element name="dateTime" type="com:DateTime" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="_dateTimeValueExtension" type="com:_ExtensionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_ExchangeInformation.xsd</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" version="1" targetNamespace="http://datex2.eu/schema/3/exchangeInformation" xmlns:ex="http://datex2.eu/schema/3/exchangeInformation" xmlns:com="http://datex2.eu/schema/3/common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="https://localhost:44375/SituationService?xsd&amp;name=DATEXII_3_Common.xsd"/>
+  <xs:complexType name="_ExchangeReturnEnum">
+    <xs:simpleContent>
+      <xs:extension base="ex:ExchangeReturnEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ExchangeStatusEnum">
+    <xs:simpleContent>
+      <xs:extension base="ex:ExchangeStatusEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_MessageTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="ex:MessageTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_ProtocolTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="ex:ProtocolTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="Agent">
+    <xs:sequence>
+      <xs:element name="internationalIdentifier" type="com:InternationalIdentifier" minOccurs="0"/>
+      <xs:element name="_agentExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DynamicInformation">
+    <xs:sequence>
+      <xs:element name="exchangeStatus" type="ex:_ExchangeStatusEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="messageGenerationTimestamp" type="com:DateTime" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="returnInformation" type="ex:ReturnInformation" minOccurs="0"/>
+      <xs:element name="_dynamicInformationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExchangeContext">
+    <xs:sequence>
+      <xs:element name="codedExchangeProtocol" type="ex:_ProtocolTypeEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="exchangeSpecificationVersion" type="com:String" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="supplierOrCisRequester" type="ex:Agent"/>
+      <xs:element name="_exchangeContextExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ExchangeInformation">
+    <xs:sequence>
+      <xs:element name="messageType" type="ex:_MessageTypeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exchangeContext" type="ex:ExchangeContext"/>
+      <xs:element name="dynamicInformation" type="ex:DynamicInformation"/>
+      <xs:element name="_exchangeInformationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="modelBaseVersion" type="xs:string" use="required" fixed="3"/>
+    <xs:attribute name="extensionName" type="xs:string" use="optional" default="Exchange 2018"/>
+    <xs:attribute name="extensionVersion" type="xs:string" use="optional" default="1"/>
+    <xs:attribute name="profileName" type="xs:string" use="optional"/>
+    <xs:attribute name="profileVersion" type="xs:string" use="optional"/>
+  </xs:complexType>
+  <xs:simpleType name="ExchangeReturnEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="fail"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ExchangeStatusEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="undefined"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MessageTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="payloadDelivery"/>
+      <xs:enumeration value="openSession"/>
+      <xs:enumeration value="keepAlive"/>
+      <xs:enumeration value="closeSession"/>
+      <xs:enumeration value="return"/>
+      <xs:enumeration value="CISServiceRequest"/>
+      <xs:enumeration value="CISFeedback"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProtocolTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="snapshotPull"/>
+      <xs:enumeration value="_extended"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ReturnInformation">
+    <xs:sequence>
+      <xs:element name="returnStatus" type="ex:_ExchangeReturnEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="returnStatusReason" type="com:MultilingualString" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="_returnInformationExtension" type="com:_ExtensionType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://localhost:44375/SituationService</con:endpoint></con:endpoints><con:operation id="12112e25-2e85-4d05-ab73-937de71b1d64" isOneWay="false" action="http://datex2.eu/wsdl/snapshotPull/2020/pullData" name="pullSnapshotData" bindingOperationName="pullSnapshotData" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1ca5c5e4-b305-47a0-9a48-b95a88889150" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://localhost:44375/SituationService</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">\r
+   &lt;soapenv:Header/>\r
+   &lt;soapenv:Body/>\r
+&lt;/soapenv:Envelope></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://datex2.eu/wsdl/snapshotPull/2020/pullData"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:RestService" id="76f320a7-0020-4dcb-8cdc-0805abe23d52" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://localhost:44375" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://localhost:44375</con:endpoint></con:endpoints><con:resource name="Pullhttp" path="/Pullhttp" id="a57ac9d8-86c1-4244-b311-79ab42218924"><con:settings/><con:parameters/><con:method name="Pullhttp 1" id="c0340abf-e076-4c4b-9d40-335fdcbc8cc0" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/xml; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>messageContainer</con:element></con:representation><con:request name="Request 1" id="94bf9a8a-3776-456b-84f0-1a6334052a53" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://localhost:44375</con:endpoint><con:request/><con:originalUri>https://localhost/Pullhttp</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
