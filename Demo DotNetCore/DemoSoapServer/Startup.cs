@@ -47,6 +47,9 @@ namespace DemoSoapServer
                 app.UseDeveloperExceptionPage();
             }
 
+            //Configure soapCore endpoint
+            #region
+            //Read settings from appSettings
             var settings = Configuration.GetSection("FileWSDL").Get<WsdlFileOptions>();
             //Set app path
             settings.AppPath = env.ContentRootPath;
@@ -57,7 +60,7 @@ namespace DemoSoapServer
             };
           
             app.UseSoapEndpoint<Models.snapshotPullInterface>("/SituationService", binding, SoapSerializer.XmlSerializer, false, null, settings);
-
+            #endregion
 
             app.UseHttpsRedirection();
 
